@@ -1,0 +1,14 @@
+---
+# defaults file for kvm
+
+bridge: br0
+iface: enahisic2i0
+kvm_path: "{{ topdir }}/kvm"
+os_variant: centos7.0
+#os_variant: debian9
+memory_mb: 8192
+vcpus: 4
+vm_name: "{{ os_variant }}-1"
+vdisk_path: "{{ kvm_path }}/{{ vm_name }}"
+iso_path: /home/CentOS-7-aarch64-Everything-1804.iso
+vdisk_size: 128

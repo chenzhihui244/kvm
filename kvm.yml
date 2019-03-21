@@ -1,0 +1,6 @@
+---
+
+- hosts: hypervisor
+  remote_user: root
+  roles:
+    - kvm

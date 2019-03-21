@@ -1,0 +1,41 @@
+---
+# tasks file for kvm
+
+- name: install dependencies
+  yum:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - qemu-kvm
+    - libvirt
+    - AAVMF
+    - virt-install
+  when: (ansible_distribution == "CentOS")
+
+- name: update qemu.conf
+  template:
+    src: qemu.conf
+    dest: /etc/libvirt/qemu.conf
+  notify: restart libvirtd
+
+- name: ensure libvirtd.service started
+  service:
+    state: started
+    name: libvirtd.service
+
+- name: setup bridge
+  script: setup-bridge.sh "{{ iface }}" "{{ bridge }}"
+
+- name: create vm path
+  file:
+    state: directory
+    path: "{{ vdisk_path }}"
+
+- name: copy create vm script
+  template:
+    src: "{{ item }}"
+    dest: "{{ kvm_path }}/{{ item }}"
+  with_items:
+    - create-vm.sh
+    - clone-vm.sh
+    - optimize-vm.sh
