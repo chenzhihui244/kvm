@@ -8,9 +8,14 @@
   with_items:
     - qemu-kvm
     - libvirt
-    - AAVMF
     - virt-install
   when: (ansible_distribution == "CentOS")
+
+- name: install FW
+  yum:
+      state: present
+      name: AAVMF
+  when: (ansible_distribution == "CentOS" and ansible_architecture == "aarch64")
 
 - name: update qemu.conf
   template:
@@ -39,3 +44,4 @@
     - create-vm.sh
     - clone-vm.sh
     - optimize-vm.sh
+    - create-vm-ks.sh

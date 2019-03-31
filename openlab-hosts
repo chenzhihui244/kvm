@@ -1,0 +1,12 @@
+[all:vars]
+topdir=/home/kvm
+iface=enp2s0
+iso_path=/home/CentOS-7-x86_64-DVD-1810.iso
+url_path=http://192.168.10.10/media/x86_64/CentOS/
+ks_path=http://192.168.10.10/kickstart/CentOS-ks.cfg
+vdisk_size=32
+vcpus=1
+memory_mb=1024
+
+[hypervisor]
+192.168.10.20
