@@ -6,9 +6,12 @@ iface: enahisic2i0
 kvm_path: "{{ topdir }}/kvm"
 os_variant: centos7.0
 #os_variant: debian9
-memory_mb: 8192
-vcpus: 4
-vm_name: "{{ os_variant }}-1"
-vdisk_path: "{{ kvm_path }}/{{ vm_name }}"
+memory_mb: 16384
+vcpus: 8
+cpuset: 0-7
+nodeset: 0
+vm_name: "{{ os_variant }}"
+url_path: http://192.168.10.11/pxe/media/aarch64/CentOS
+ks_path: http://192.168.10.11/pxe/kickstart/CentOS-ks.cfg
 iso_path: /home/CentOS-7-aarch64-Everything-1804.iso
 vdisk_size: 128
