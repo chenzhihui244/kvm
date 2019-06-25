@@ -4,14 +4,20 @@
 bridge: br0
 iface: enahisic2i0
 kvm_path: "{{ topdir }}/kvm"
-os_variant: centos7.0
-#os_variant: debian9
+#os_variant: centos7.0
+os_variant: debian9
 memory_mb: 16384
 vcpus: 8
 cpuset: 0-7
 nodeset: 0
 vm_name: "{{ os_variant }}"
-url_path: http://192.168.10.11/pxe/media/aarch64/CentOS
-ks_path: http://192.168.10.11/pxe/kickstart/CentOS-ks.cfg
+
+url_path: http://192.168.2.135/pxe/media/aarch64/CentOS
+ks_path: http://192.168.2.135/pxe/kickstart/CentOS-ks.cfg
+
+ubuntu_url_path: http://192.168.2.135/work/mirror/ubuntu-ports/dists/bionic/main/installer-arm64
+preseed_path: http://192.168.2.135/pxe/kickstart/preseed-Ubuntu.cfg
+
 iso_path: /home/CentOS-7-aarch64-Everything-1804.iso
+
 vdisk_size: 128

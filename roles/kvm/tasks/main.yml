@@ -36,3 +36,4 @@
     - clone-vm.sh
     - optimize-vm.sh
     - create-vm-ks.sh
+    - create-vm-ks-ubuntu.sh

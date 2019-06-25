@@ -8,11 +8,11 @@ virt-install \
 	--os-type linux \
 	--os-variant "{{ os_variant }}" \
 	--memory {{ memory_mb }} \
-	--vcpus {{ vcpus }},cpuset={{ cpuset }} \
+	--vcpus {{ vcpus }} \
 	--numatune nodeset={{ nodeset }} \
-	--disk path={{ kvm_path }}/disk.img,bus=virtio,size=32 \
+	--disk path={{ kvm_path }}/${name}/disk.img,bus=virtio,size=32 \
 	--network bridge={{ bridge }} \
 	--graphics vnc,listen=0.0.0.0,keymap=en-us \
-	--location {{ url_path }} \
-	--extra-args="ks={{ ks_path }}" \
+	--location {{ ubuntu_url_path }} \
+	--extra-args="auto=true priority=critical preseed/url={{ preseed_path }}" \
 	--extra-args console=ttyS0
