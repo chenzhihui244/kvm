@@ -1,9 +1,9 @@
 #!/bin/sh
 
 host_iface=enp125s0f0
-bridge=ovsbr0
-#bridge=br0
-vmname=ovsvm1
+ovs_bridge=ovsbr0
+bridge=br0
+vmname=ovsvm3
 #vmname=euleros2.8
 vm_root=/vm/images
 os_variant=centos7.0
@@ -51,10 +51,10 @@ setup_bridge() {
 	}
 }
 
-create_vm_nonet() {
+create_vm_ovsnet() {
 	local vmname=$1
 
-	virsh list | grep $vmname && {
+	virsh list --all | grep $vmname && {
 		echo "${vmname} exist"
 		return
 	}
@@ -62,8 +62,7 @@ create_vm_nonet() {
 	mkdir -p ${vm_root}/${vmname}
 	echo "create vm ${vmname}"
 
-set -x
-
+	set -x
 	virt-install \
 	--name ${vmname} \
 	--os-type linux \
@@ -71,12 +70,14 @@ set -x
 	--memory ${memory_mb} \
 	--vcpus ${vcpus},cpuset=${cpuset} \
 	--numatune nodeset=${nodeset} \
+	--network type=direct,source=${ovs_bridge} \
 	--disk path=${vm_root}/${vmname}/disk.img,bus=virtio,size=${vdisk_size} \
 	--graphics vnc,listen=0.0.0.0,keymap=en-us \
 	--location ${iso_path} \
 	--extra-args console=ttyS0
-set +x
+	set +x
 }
+
 create_vm() {
 	local vmname=$1
 
@@ -139,6 +140,6 @@ delete_vm() {
 
 #prepare
 #setup_bridge
-create_vm ${vmname}
-#create_vm_nonet ${vmname}
-#clone_vm vmc4m16 docker
+#create_vm ${vmname}
+create_vm_ovsnet ${vmname}
+#clone_vm ovsvm1 ovsvm2
